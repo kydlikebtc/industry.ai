@@ -1,6 +1,7 @@
 'use client'
+import { pixelify_sans } from '@/app/fonts';
 
-import { useCharacterSelect } from '@/contexts/CharacterSelectContext'
+import { useCharacterSelect } from '@/contexts/CharacterSelectContext';
 
 function CreateCharacterButton() {
     const { setIsOpen } = useCharacterSelect()
@@ -8,7 +9,7 @@ function CreateCharacterButton() {
     return (
         <button
             onClick={() => setIsOpen(true)}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+            className={`${pixelify_sans.className} bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded`}
         >
             Create Character
         </button>

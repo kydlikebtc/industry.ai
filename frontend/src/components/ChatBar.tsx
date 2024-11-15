@@ -37,7 +37,7 @@ const ChatBar: React.FC<ChatBarProps> = ({ onSendMessage, disabled = false }) =>
             <button
                 type="submit"
                 disabled={disabled || !message.trim()}
-                className="bg-primary text-primary-foreground shadow hover:bg-primary/90 
+                className="bg-primary  shadow hover:bg-primary/90 
                           h-9 w-9 rounded-lg flex items-center justify-center
                           disabled:bg-primary/30 disabled:cursor-not-allowed"
             >

@@ -114,6 +114,21 @@ function checkCharacterCollision(
     });
 }
 
+// Update the isWithinCanvasBounds function
+function isWithinCanvasBounds(x: number, y: number): boolean {
+    const scaledX = x * SCALE_FACTOR + MAP_OFFSET_X;
+    const scaledY = y * SCALE_FACTOR + MAP_OFFSET_Y;
+    const characterSize = SPRITE_SIZE * SCALE_FACTOR;
+    const buffer = 50; // 50px buffer from edges
+
+    return (
+        scaledX >= buffer &&
+        scaledX + characterSize <= CANVAS_WIDTH - buffer &&
+        scaledY >= buffer &&
+        scaledY + characterSize <= CANVAS_HEIGHT - buffer
+    );
+}
+
 const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string }) => {
     // Refs
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -653,17 +668,19 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                         const scaledNewX = newX * SCALE_FACTOR + MAP_OFFSET_X;
                         const scaledNewY = newY * SCALE_FACTOR + MAP_OFFSET_Y;
 
-                        // Check both walkable area and character collisions
-                        if (isWalkable(scaledNewX, scaledNewY) &&
-                            !checkCharacterCollision(newPlayerStates, index, newX, newY)) {
+                        // Check both canvas bounds, walkable area, and character collisions
+                        if (
+                            isWithinCanvasBounds(newX, newY) &&
+                            isWalkable(scaledNewX, scaledNewY) &&
+                            !checkCharacterCollision(newPlayerStates, index, newX, newY)
+                        ) {
                             playerState.x = newX;
                             playerState.y = newY;
                         } else {
                             // On collision, immediately stop and change direction
                             playerState.isMoving = false;
                             playerState.ai.action = 'paused';
-                            playerState.ai.actionEndTime = Date.now() + 1000; // Pause for 1 second
-                            // Choose a new direction that's different from the current one
+                            playerState.ai.actionEndTime = Date.now() + 1000;
                             let newDirection;
                             do {
                                 newDirection = DIRECTIONS[getRandomInt(0, DIRECTIONS.length - 1)];
@@ -744,8 +761,12 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                 const scaledNewX = newX * SCALE_FACTOR + MAP_OFFSET_X;
                 const scaledNewY = newY * SCALE_FACTOR + MAP_OFFSET_Y;
 
-                if (isWalkable(scaledNewX, scaledNewY) &&
-                    !checkCharacterCollision(newStates, controlledCharacterIndex, newX, newY)) {
+                // Check both canvas bounds, walkable area, and character collisions
+                if (
+                    isWithinCanvasBounds(newX, newY) &&
+                    isWalkable(scaledNewX, scaledNewY) &&
+                    !checkCharacterCollision(newStates, controlledCharacterIndex, newX, newY)
+                ) {
                     playerState.x = newX;
                     playerState.y = newY;
                     newStates[controlledCharacterIndex] = playerState;

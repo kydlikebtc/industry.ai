@@ -956,15 +956,18 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
 
     // Return statement with conditional rendering
     return (
-        <div className="relative flex flex-col md:flex-row gap-4 h-[calc(100vh-2rem)] overflow-hidden">
-            <div className="hidden md:block h-full overflow-y-auto">
+        <div className="relative flex flex-col md:flex-row gap-4 h-[calc(100vh-5rem)] max-h-[calc(100vh-7rem)]">
+            {/* Left Column - Chat */}
+            <div className="hidden md:block w-80 h-full overflow-hidden">
                 <Chat
                     messages={chatMessages}
                     onSendMessage={handleGlobalMessage}
                     disabled={!isInitialized}
                 />
             </div>
-            <div className="relative flex-1 order-first md:order-none flex items-center justify-center ">
+
+            {/* Middle Column - Game Canvas */}
+            <div className="relative flex-1 order-first md:order-none h-full flex items-center justify-center overflow-hidden">
                 {!isInitialized ? (
                     <div>Loading...</div>
                 ) : (
@@ -975,16 +978,12 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                             height={CANVAS_HEIGHT}
                             onMouseMove={handleMouseMove}
                             onClick={handleClick}
-                            className="max-w-full max-h-full object-contain"
+                            className="max-w-full max-h-full object-fill"
                             style={{
                                 width: 'auto',
                                 height: '100%'
                             }}
                         />
-                        {/* <ChatBar
-                            onSendMessage={handleGlobalMessage}
-                            disabled={!isInitialized}
-                        /> */}
                         {isInputActive && controlledPlayerState && (
                             <input
                                 type="text"
@@ -1004,7 +1003,9 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                     </>
                 )}
             </div>
-            <div className="hidden md:block h-full overflow-y-auto">
+
+            {/* Right Column - Notifications */}
+            <div className="hidden md:block w-80 h-full overflow-hidden">
                 <NotificationBoard notifications={notifications} />
             </div>
 

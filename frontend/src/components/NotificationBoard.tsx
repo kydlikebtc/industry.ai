@@ -41,22 +41,26 @@ const NotificationBoard = ({ notifications }: NotificationBoardProps) => {
     }, [notifications, sendTransaction]);
 
     return (
-        <div className="w-80 h-full bg-card p-4 overflow-y-auto border-l">
-            <h2 className={`font-semibold tracking-tight text-2xl text-blue-900 mb-4  ${pixelify_sans.className} `}>System Events</h2>
-            <div className="space-y-2">
-                {notifications.map((notification) => {
-                    const parsedData = JSON.parse(notification.message);
-                    return (
-                        <Notification
-                            key={notification.id}
-                            characterName={parsedData.characterId}
-                            timestamp={new Date(parsedData.createdAt)}
-                            message={formatMessage(parsedData)}
-                            eventName={parsedData.eventName}
-                            metadata={parsedData.metadata}
-                        />
-                    );
-                })}
+        <div className="w-full h-full max-h-screen flex flex-col bg-card p-4 overflow-hidden border-l">
+            <h2 className={`font-semibold tracking-tight text-2xl text-blue-900 mb-4 ${pixelify_sans.className}`}>
+                System Events
+            </h2>
+            <div className="flex-1 overflow-y-auto">
+                <div className="space-y-2">
+                    {notifications.map((notification) => {
+                        const parsedData = JSON.parse(notification.message);
+                        return (
+                            <Notification
+                                key={notification.id}
+                                characterName={parsedData.characterId}
+                                timestamp={new Date(parsedData.createdAt)}
+                                message={formatMessage(parsedData)}
+                                eventName={parsedData.eventName}
+                                metadata={parsedData.metadata}
+                            />
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

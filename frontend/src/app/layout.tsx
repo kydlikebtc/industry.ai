@@ -4,6 +4,7 @@ import { CharacterSelectProvider } from '@/contexts/CharacterSelectContext';
 import { Providers } from "@/providers/providers";
 import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import type { Metadata } from "next";
+import Image from 'next/image';
 import { inter } from './fonts';
 import "./globals.css";
 
@@ -38,9 +39,15 @@ export default function RootLayout({
                       <UserButton />
                     </SignedIn>
                   </div>
-                  <div className="flex items-center justify-center">
-                    <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg">
-                      <span className="text-white font-bold text-xl">LOGO</span>
+                  <div className="absolute left-1/2 top-4 -translate-x-1/2">
+                    <div className="flex items-center justify-center">
+                      <Image
+                        src="/logo_industry.png"
+                        alt="Industry AI Logo"
+                        width={180}
+                        height={40}
+                        priority
+                      />
                     </div>
                   </div>
                   <CreateCharacterButton />

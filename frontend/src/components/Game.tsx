@@ -964,7 +964,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                     disabled={!isInitialized}
                 />
             </div>
-            <div className="relative flex-1 order-first md:order-none flex items-center justify-center bg-slate-800">
+            <div className="relative flex-1 order-first md:order-none flex items-center justify-center ">
                 {!isInitialized ? (
                     <div>Loading...</div>
                 ) : (

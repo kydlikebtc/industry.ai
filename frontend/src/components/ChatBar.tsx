@@ -31,19 +31,17 @@ const ChatBar: React.FC<ChatBarProps> = ({ onSendMessage, disabled = false }) =>
                 disabled={disabled}
                 placeholder="Ask the AI characters a question..."
                 className="flex-1 px-4 py-2 rounded-lg bg-white/95 backdrop-blur-sm 
-                          border border-navy-600/20 text-navy-900 placeholder-navy-400
+                          border border-navy-600/20 text-black placeholder-navy-400
                           focus:outline-none focus:ring-2 focus:ring-navy-300"
             />
             <button
                 type="submit"
                 disabled={disabled || !message.trim()}
-                className="p-2 rounded-lg bg-white/95 backdrop-blur-sm 
-                          border border-navy-600/20 text-navy-900
-                          hover:bg-navy-50 focus:outline-none 
-                          focus:ring-2 focus:ring-navy-300
-                          disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-primary text-primary-foreground shadow hover:bg-primary/90 
+                          h-9 w-9 rounded-lg flex items-center justify-center
+                          disabled:bg-primary/30 disabled:cursor-not-allowed"
             >
-                <IoSend size={20} className="text-navy-900" />
+                <IoSend size={20} />
             </button>
         </form>
     );

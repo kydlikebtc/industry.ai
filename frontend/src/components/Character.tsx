@@ -1,6 +1,6 @@
 "use client"
 
-import { CHARACTER_SCALE, DIRECTION_ORDER, MAP_OFFSET_X, MAP_OFFSET_Y, SCALE_FACTOR, SPRITE_SIZE, WEBSOCKET_URL } from "../properties";
+import { CHARACTER_SCALE, DIRECTION_ORDER, MAP_OFFSET_X, MAP_OFFSET_Y, SCALE_FACTOR, SPRITE_SIZE, WEBSOCKET_URL } from "@/utils/properties";
 
 interface CharacterBounds {
     x: number;

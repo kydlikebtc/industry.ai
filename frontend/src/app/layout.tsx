@@ -1,24 +1,11 @@
-import { Providers } from "@/providers/providers";
-import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-
 import CharacterSelect from '@/components/CharacterSelect';
 import CreateCharacterButton from '@/components/CreateCharacterButton';
 import { CharacterSelectProvider } from '@/contexts/CharacterSelectContext';
+import { Providers } from "@/providers/providers";
+import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import type { Metadata } from "next";
+import { inter } from './fonts';
 import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Industry AI",
@@ -33,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} `}
+        className={inter.className}
       >
         <div className="absolute inset-0">
           <div className="absolute inset-0 -z-10 h-full w-full bg-[#EAEBED] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>

@@ -1,5 +1,6 @@
 "use client"
 
+import { pixelify_sans } from '@/app/fonts';
 import { WalletDefault } from '@coinbase/onchainkit/wallet';
 import { useEffect, useRef, useState } from 'react';
 import { IoSend } from "react-icons/io5";
@@ -41,7 +42,7 @@ const Chat = ({ messages, onSendMessage, disabled = false }: ChatProps) => {
     };
 
     return (
-        <div className={`
+        <div className={` ${pixelify_sans.className}
             transition-all duration-300 flex-1 md:flex-none
             md:w-80 md:h-[calc(100vh-2rem)] md:relative
             ${isExpanded

@@ -34,8 +34,8 @@ const Chat = ({ messages }: ChatProps) => {
             transition-all duration-300 flex-1 md:flex-none
             md:w-80 md:h-[calc(100vh-2rem)] md:relative
             ${isExpanded
-                ? 'fixed inset-0 z-50 bg-white/95'
-                : 'relative bg-white/80 backdrop-blur-sm rounded-lg h-14 md:h-auto'
+                ? 'fixed inset-0 z-50 bg-card/95'
+                : 'relative bg-card/80 backdrop-blur-sm rounded-lg h-14 md:h-auto'
             }
         `}>
             <div

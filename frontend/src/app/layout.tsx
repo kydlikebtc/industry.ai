@@ -3,9 +3,9 @@ import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@c
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import CharacterSelect from "../components/CharacterSelect";
-import CreateCharacterButton from '../components/CreateCharacterButton';
-import { CharacterSelectProvider } from '../contexts/CharacterSelectContext';
+import CharacterSelect from '@/components/CharacterSelect';
+import CreateCharacterButton from '@/components/CreateCharacterButton';
+import { CharacterSelectProvider } from '@/contexts/CharacterSelectContext';
 import "./globals.css";
 
 const geistSans = localFont({

@@ -4,9 +4,9 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { Skeleton } from "@/components/ui/skeleton"
+import { useCharacterSelect } from '@/contexts/CharacterSelectContext'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
-import { useCharacterSelect } from '../contexts/CharacterSelectContext'
 import SkillSelect from './SkillSelect'
 
 type Category = {

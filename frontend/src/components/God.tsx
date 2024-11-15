@@ -1,6 +1,6 @@
 "use client"
 
-import { WEBSOCKET_URL } from "../properties";
+import { WEBSOCKET_URL } from "@/utils/properties";
 
 declare global {
     interface Window {

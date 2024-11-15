@@ -958,7 +958,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
     return (
         <div className="relative flex flex-col md:flex-row gap-4 h-[calc(100vh-5rem)] max-h-[calc(100vh-7rem)]">
             {/* Left Column - Chat */}
-            <div className="hidden md:block w-80 h-full overflow-hidden">
+            <div className="hidden md:block w-80 h-full overflow-hidden rounded-lg">
                 <Chat
                     messages={chatMessages}
                     onSendMessage={handleGlobalMessage}
@@ -967,7 +967,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
             </div>
 
             {/* Middle Column - Game Canvas */}
-            <div className="relative flex-1 order-first md:order-none h-full flex items-center justify-center overflow-hidden">
+            <div className="relative flex-1 order-first md:order-none h-full flex items-center justify-center overflow-hidden rounded-lg">
                 {!isInitialized ? (
                     <div>Loading...</div>
                 ) : (
@@ -1005,7 +1005,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
             </div>
 
             {/* Right Column - Notifications */}
-            <div className="hidden md:block w-80 h-full overflow-hidden">
+            <div className="hidden md:block w-80 h-full overflow-hidden rounded-lg">
                 <NotificationBoard notifications={notifications} />
             </div>
 

@@ -19,15 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-hidden">
       <body
-        className={inter.className}
+        className={`${inter.className} overflow-hidden`}
       >
         <div className="absolute inset-0">
           <div className="absolute inset-0 -z-10 h-full w-full bg-[#EAEBED] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
         </div>
         <ClerkProvider>
-          <div className="mx-auto max-w-[1280px]">
+          <div className="mx-auto max-w-[1280px] h-screen overflow-hidden">
             <Providers>
               <CharacterSelectProvider>
                 <div className="flex justify-between items-center p-4">

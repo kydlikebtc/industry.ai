@@ -23,7 +23,6 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Character } from './Character';
 import Chat from './Chat';
-import ChatBar from './ChatBar';
 import { God } from './God';
 import NotificationBoard, { NotificationData } from './NotificationBoard';
 
@@ -959,7 +958,11 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
     return (
         <div className="relative flex flex-col md:flex-row gap-4 h-[calc(100vh-2rem)] overflow-hidden">
             <div className="hidden md:block h-full overflow-y-auto">
-                <Chat messages={chatMessages} />
+                <Chat
+                    messages={chatMessages}
+                    onSendMessage={handleGlobalMessage}
+                    disabled={!isInitialized}
+                />
             </div>
             <div className="relative flex-1 order-first md:order-none flex items-center justify-center bg-slate-800">
                 {!isInitialized ? (
@@ -978,10 +981,10 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                                 height: '100%'
                             }}
                         />
-                        <ChatBar
+                        {/* <ChatBar
                             onSendMessage={handleGlobalMessage}
                             disabled={!isInitialized}
-                        />
+                        /> */}
                         {isInputActive && controlledPlayerState && (
                             <input
                                 type="text"
@@ -1007,7 +1010,11 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
 
             {/* Mobile Chat and Notifications */}
             <div className="md:hidden fixed bottom-4 left-4 right-4 flex gap-2">
-                <Chat messages={chatMessages} />
+                <Chat
+                    messages={chatMessages}
+                    onSendMessage={handleGlobalMessage}
+                    disabled={!isInitialized}
+                />
                 <NotificationBoard notifications={notifications} />
             </div>
         </div>

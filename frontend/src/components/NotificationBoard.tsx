@@ -42,7 +42,7 @@ const NotificationBoard = ({ notifications }: NotificationBoardProps) => {
 
     return (
         <div className="w-80 h-full bg-card p-4 overflow-y-auto border-l">
-            <h2 className="text-lg font-semibold mb-4 text-foreground">System Events</h2>
+            <h2 className="font-semibold tracking-tight text-2xl text-blue-900 mb-4 text-foreground">System Events</h2>
             <div className="space-y-2">
                 {notifications.map((notification) => {
                     const parsedData = JSON.parse(notification.message);

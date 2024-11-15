@@ -1,5 +1,5 @@
+import Game from "@/components/Game";
 import { currentUser } from "@clerk/nextjs/server";
-import Game from "./components/Game";
 
 export default async function Home() {
   const user = await currentUser();

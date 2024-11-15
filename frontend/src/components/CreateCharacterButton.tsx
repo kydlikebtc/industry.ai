@@ -1,6 +1,6 @@
 'use client'
 
-import { useCharacterSelect } from '../contexts/CharacterSelectContext'
+import { useCharacterSelect } from '@/contexts/CharacterSelectContext'
 
 function CreateCharacterButton() {
     const { setIsOpen } = useCharacterSelect()

@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     AI_MOVE_DURATION_MAX,
     AI_MOVE_DURATION_MIN,
@@ -20,7 +19,8 @@ import {
     SCALE_FACTOR,
     SPRITE_SIZE,
     WALKABLE_AREAS
-} from '../properties';
+} from '@/utils/properties';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Character } from './Character';
 import Chat from './Chat';
 import ChatBar from './ChatBar';

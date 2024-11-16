@@ -18,6 +18,14 @@ interface ChatProps {
     disabled?: boolean;
 }
 
+const characterColors: { [key: string]: string } = {
+    'Eric': 'text-emerald-600',
+    'Harper': 'text-purple-600',
+    'Rishi': 'text-amber-600',
+    'Yasmin': 'text-rose-600',
+    'You': 'text-blue-600'
+};
+
 const Chat = ({ messages, onSendMessage, disabled = false }: ChatProps) => {
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -86,7 +94,9 @@ const Chat = ({ messages, onSendMessage, disabled = false }: ChatProps) => {
                     {messages.map((msg) => (
                         <div key={msg.id} className="space-y-1">
                             <div className="flex items-center gap-2">
-                                <span className="font-semibold text-sm">{msg.characterName}</span>
+                                <span className={`font-semibold text-sm ${characterColors[msg.characterName] || 'text-gray-600'}`}>
+                                    {msg.characterName}
+                                </span>
                                 <span className="text-xs text-gray-500">
                                     {msg.timestamp.toLocaleTimeString()}
                                 </span>
@@ -107,20 +117,19 @@ const Chat = ({ messages, onSendMessage, disabled = false }: ChatProps) => {
                             onChange={(e) => setMessage(e.target.value)}
                             disabled={disabled}
                             placeholder="Ask the AI characters a question..."
-                            className="flex-1 px-4 py-2 rounded-lg bg-white/95 backdrop-blur-sm 
-                                    border border-navy-600/20 text-navy-900 placeholder-navy-400
+                            className="flex-1 px-4 py-2 rounded-lg bg-transparent 
+                                    border border-navy-600/20 text-black placeholder-navy-400
                                     focus:outline-none focus:ring-2 focus:ring-navy-300"
                         />
                         <button
                             type="submit"
                             disabled={disabled || !message.trim()}
-                            className="p-2 rounded-lg bg-white/95 backdrop-blur-sm 
-                                    border border-navy-600/20 text-navy-900
-                                    hover:bg-navy-50 focus:outline-none 
+                            className="p-2 rounded-lg bg-primary text-white
+                                    hover:bg-primary/90 focus:outline-none 
                                     focus:ring-2 focus:ring-navy-300
                                     disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            <IoSend size={20} className="text-navy-900" />
+                            <IoSend size={20} />
                         </button>
                     </div>
                 </form>

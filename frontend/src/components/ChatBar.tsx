@@ -30,14 +30,14 @@ const ChatBar: React.FC<ChatBarProps> = ({ onSendMessage, disabled = false }) =>
                 onChange={(e) => setMessage(e.target.value)}
                 disabled={disabled}
                 placeholder="Ask the AI characters a question..."
-                className="flex-1 px-4 py-2 rounded-lg bg-white/95 backdrop-blur-sm 
+                className="flex-1 px-4 py-2 rounded-lg bg-transparent 
                           border border-navy-600/20 text-black placeholder-navy-400
                           focus:outline-none focus:ring-2 focus:ring-navy-300"
             />
             <button
                 type="submit"
                 disabled={disabled || !message.trim()}
-                className="bg-primary  shadow hover:bg-primary/90 
+                className="bg-primary text-white shadow hover:bg-primary/90 
                           h-9 w-9 rounded-lg flex items-center justify-center
                           disabled:bg-primary/30 disabled:cursor-not-allowed"
             >

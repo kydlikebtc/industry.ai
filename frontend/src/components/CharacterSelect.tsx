@@ -92,7 +92,7 @@ function StyleSelector({
                         style={{ transform: `translateX(-${current * 25}%)` }}
                     >
                         {CHARACTER_PRESETS.map((char) => (
-                            <div key={char.id} className="w-1/4 h-full flex items-center justify-center bg-gray-200">
+                            <div key={char.id} className="w-1/4 h-full flex flex-col items-center justify-center bg-gray-200">
                                 <div className="relative w-32 h-32">
                                     <Image
                                         src={`/${char.name.toLowerCase()}_sprite.png`}
@@ -102,6 +102,9 @@ function StyleSelector({
                                         priority
                                     />
                                 </div>
+                                <span className={`${pixelify_sans.className} mt-2 text-lg text-blue-900 font-bold`}>
+                                    {char.name}
+                                </span>
                             </div>
                         ))}
                     </div>

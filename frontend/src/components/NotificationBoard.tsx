@@ -1,12 +1,11 @@
 import { pixelify_sans } from '@/app/fonts';
-import { NotificationData } from '@/app/mockdata';
 import { useEffect } from 'react';
 import { formatEther } from 'viem';
 import { useSendTransaction } from 'wagmi';
 import Notification from './Notification';
 
 interface NotificationBoardProps {
-    notifications: NotificationData[];
+    notifications: any[];
 }
 
 const NotificationBoard = ({ notifications }: NotificationBoardProps) => {

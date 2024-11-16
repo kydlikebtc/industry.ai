@@ -27,7 +27,7 @@ import { Character } from './Character';
 import CharacterSelect from './CharacterSelect';
 import Chat from './Chat';
 import { God } from './God';
-import NotificationBoard, { NotificationData } from './NotificationBoard';
+import NotificationBoard from './NotificationBoard';
 import RecursiveChat from './RecursiveChat';
 
 // Function to get a random integer between min and max
@@ -148,7 +148,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
     const [isHoveredIndex, setIsHoveredIndex] = useState<number | null>(null);
     const [inputValue, setInputValue] = useState<string>('');
     const [chatMode, setChatMode] = useState<'STANDARD' | 'RECURSIVE'>('STANDARD');
-    const [notifications, setNotifications] = useState<NotificationData[]>([]);
+    const [notifications, setNotifications] = useState<any[]>([]);
     const [chatMessages, setChatMessages] = useState<{
         id: string;
         message: string;

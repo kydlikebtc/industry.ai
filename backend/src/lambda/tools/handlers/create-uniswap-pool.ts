@@ -213,7 +213,7 @@ export async function createUniswapPool({
                 eventName: 'uniswap_pool_created',
                 metadata: {
                     tokenAddress: erc20TokenAddress,
-                    poolAddress: poolAddress,
+                    poolAddress: poolAddress.toLowerCase(),
                     transactionHash: receipt.transactionHash
                 }
             }

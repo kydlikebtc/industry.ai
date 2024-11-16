@@ -102,9 +102,9 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
             case 'contract_deployed':
                 return `https://basescan.org/${metadata.contractAddress}`;
             case 'uniswap_pool_created':
-                return `https://dexscreener.com/base/${metadata.poolAddress}`;
+                return `https://dexscreener.com/base/${metadata.poolAddress.toLowerCase()}`;
             case 'nft_created':
-                return `https://zora.co/collect/zora:${metadata.contractAddress}`;
+                return `https://zora.co/collect/zora:${metadata.contractAddress.toLowerCase()}`;
             default:
                 return null;
         }

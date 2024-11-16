@@ -12,7 +12,7 @@ export const MAP_HEIGHT = 1320;
 export const DEBUG_WALKABLE_AREAS = false;
 export const DEBUG_CHARACTER_SELECT_BOXES = false;
 export const WALKABLE_AREAS = [
-    { x: -1500, y: 150, width: 3950, height: 450 },
+    { x: -1500, y: 160, width: 3950, height: 440 },
     { x: -50, y: 650, width: 1200, height: 1730 },
 ];
 

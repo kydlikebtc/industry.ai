@@ -21,6 +21,7 @@ import {
     WALKABLE_AREAS
 } from '@/utils/properties';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import AgentDetails from './AgentDetails';
 import { Character } from './Character';
 import Chat from './Chat';
 import { God } from './God';
@@ -1025,9 +1026,18 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                 )}
             </div>
 
-            {/* Right Column - Notifications */}
-            <div className="hidden md:block w-80 h-full overflow-hidden rounded-lg">
-                <NotificationBoard notifications={notifications} />
+            {/* Right Column - Notifications and Agent Details */}
+            <div className="hidden md:block w-80 h-full space-y-4">
+                <div className="h-[60%] overflow-hidden rounded-lg">
+                    <NotificationBoard notifications={notifications} />
+                </div>
+                <div className="h-[38%] overflow-hidden rounded-lg">
+                    <AgentDetails
+                        ens="agent.eth"
+                        chain="Ethereum"
+                        resources={["100 USDC", "2 NFTs", "1 Badge"]}
+                    />
+                </div>
             </div>
 
             {/* Mobile Chat and Notifications */}

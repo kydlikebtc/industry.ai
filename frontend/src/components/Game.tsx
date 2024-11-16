@@ -1051,17 +1051,17 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                 )}
             </div>
 
-            {/* Right Column - Notifications and Agent Details */}
+            {/* Right Column - Agent Details and Notifications */}
             <div className="hidden md:block w-80 h-full space-y-4">
-                <div className="h-[60%] overflow-hidden rounded-lg">
-                    <NotificationBoard notifications={notifications} />
-                </div>
-                <div className="h-[38%] overflow-hidden rounded-lg">
+                <div className="h-[28%] overflow-hidden rounded-lg">
                     <AgentDetails
                         ens="agent.eth"
                         chain="Ethereum"
                         resources={["100 USDC", "2 NFTs", "1 Badge"]}
                     />
+                </div>
+                <div className="h-[70%] overflow-hidden rounded-lg">
+                    <NotificationBoard notifications={notifications} />
                 </div>
             </div>
 

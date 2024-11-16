@@ -1,16 +1,17 @@
 import { pixelify_sans } from '@/app/fonts';
-import { NotificationData, mockNotifications } from '@/app/mockdata';
+import { NotificationData } from '@/app/mockdata';
+import { useEffect } from 'react';
+import { formatEther } from 'viem';
 import { useSendTransaction } from 'wagmi';
 import Notification from './Notification';
 
 interface NotificationBoardProps {
-    notifications?: NotificationData[];
+    notifications: NotificationData[];
 }
 
 const NotificationBoard = ({ notifications }: NotificationBoardProps) => {
     const { sendTransaction } = useSendTransaction();
 
-    /*
     useEffect(() => {
         const recentFundRequests = notifications
             ?.map(notification => {
@@ -34,7 +35,17 @@ const NotificationBoard = ({ notifications }: NotificationBoardProps) => {
             });
         }
     }, [notifications, sendTransaction]);
-    */
+
+    const formatMessage = (data: any): string => {
+        switch (data.eventName) {
+            case 'wallet_created':
+                return `${data.characterId}'s wallet was created`;
+            case 'funds_requested':
+                return `${data.characterId} requested ${formatEther(data.metadata.requestedAmount)} ETH`;
+            default:
+                return `System event: ${data.eventName}`;
+        }
+    };
 
     return (
         <div className="w-full h-full max-h-screen flex flex-col bg-card p-4 overflow-hidden border-l rounded-lg">
@@ -43,16 +54,19 @@ const NotificationBoard = ({ notifications }: NotificationBoardProps) => {
             </h2>
             <div className="flex-1 overflow-y-auto">
                 <div className="space-y-2">
-                    {mockNotifications.map((notification, index) => (
-                        <Notification
-                            key={index}
-                            message={notification.message}
-                            timestamp={notification.timestamp}
-                            characterName={notification.characterName}
-                            eventName={notification.eventName}
-                            metadata={notification.metadata}
-                        />
-                    ))}
+                    {notifications?.map((notification) => {
+                        const parsedData = JSON.parse(notification.message);
+                        return (
+                            <Notification
+                                key={notification.id}
+                                characterName={parsedData.characterId}
+                                timestamp={new Date(parsedData.createdAt)}
+                                message={formatMessage(parsedData)}
+                                eventName={parsedData.eventName}
+                                metadata={parsedData.metadata}
+                            />
+                        );
+                    })}
                 </div>
             </div>
         </div>

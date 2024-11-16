@@ -16,7 +16,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
-export default function RecursiveChat() {
+export default function RecursiveChat({ chatMode, setChatMode }: { chatMode: 'STANDARD' | 'RECURSIVE', setChatMode: (mode: 'STANDARD' | 'RECURSIVE') => void }) {
     return (
         <Card className="w-full">
             <CardHeader>
@@ -26,7 +26,7 @@ export default function RecursiveChat() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <Select>
+                <Select value={chatMode} onValueChange={setChatMode}>
                     <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select chat mode" />
                     </SelectTrigger>

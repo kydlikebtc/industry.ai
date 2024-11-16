@@ -27,20 +27,20 @@ export default function RecursiveChat({ chatMode, setChatMode }: { chatMode: 'ST
             </CardHeader>
             <CardContent>
                 <Select value={chatMode} onValueChange={setChatMode}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full" defaultValue={"STANDARD"}>
                         <SelectValue placeholder="Select chat mode" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="standard">
+                        <SelectItem value="STANDARD">
                             Standard Chat
                             <span className="block text-xs text-muted-foreground">
-                                Direct communication between agents
+                                Direct communication between you and the agents
                             </span>
                         </SelectItem>
-                        <SelectItem value="recursive">
+                        <SelectItem value="RECURSIVE">
                             Recursive Chat
                             <span className="block text-xs text-muted-foreground">
-                                Agents can have internal dialogues and deeper reasoning
+                                Agents discuss with each other without a human in the loop
                             </span>
                         </SelectItem>
                     </SelectContent>

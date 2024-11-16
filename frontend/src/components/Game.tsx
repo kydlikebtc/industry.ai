@@ -484,7 +484,8 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                     },
                     sessionId,
                     userId,
-                    walletAddress
+                    walletAddress,
+                    chatMode
                 );
             }
 
@@ -580,6 +581,12 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
             }
         };
     }, []); // Empty dependency array ensures this runs only once
+
+    useEffect(() => {
+        if (godRef.current) {
+            godRef.current.setChatMode(chatMode);
+        }
+    }, [chatMode]);
 
     // Initialize AI states for uncontrolled characters
     useEffect(() => {

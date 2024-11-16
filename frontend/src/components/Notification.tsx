@@ -1,7 +1,6 @@
 import { truncateAddress } from '@/utils/formatters';
 import { Name } from '@coinbase/onchainkit/identity';
 import Image from 'next/image';
-import { useState } from 'react';
 import { base } from 'wagmi/chains';
 
 interface NotificationProps {
@@ -13,46 +12,118 @@ interface NotificationProps {
 }
 
 const Notification = ({ message, timestamp, characterName, eventName, metadata }: NotificationProps) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-
     const getEventTagClass = (event: string) => {
         switch (event) {
+            case 'funds_requested':
+                return 'bg-emerald-500 text-white';
+            case 'trade_executed':
+                return 'bg-blue-500 text-white';
+            case 'contract_deployed':
+                return 'bg-purple-500 text-white';
+            case 'wallet_created':
+                return 'bg-amber-500 text-white';
             case 'uniswap_pool_created':
                 return 'bg-pink-500 text-white';
-            case 'basename_managed':
-                return 'bg-blue-500 text-white';
             case 'tweet_created':
-                return 'bg-blue-300 text-black';
+                return 'bg-sky-500 text-white';
+            case 'system':
+                return 'bg-gray-500 text-white';
+            case 'image_created':
+                return 'bg-indigo-500 text-white';
+            case 'basename_managed':
+                return 'bg-blue-700 text-white';
             default:
                 return 'bg-muted text-black';
         }
     };
 
+    const getCharacterNameClass = (name: string) => {
+        const lowerName = name.toLowerCase();
+        switch (lowerName) {
+            case 'eric':
+                return 'text-green-500';
+            case 'harper':
+                return 'text-purple-500';
+            case 'rishi':
+                return 'text-amber-500';
+            case 'yasmin':
+                return 'text-rose-500';
+            default:
+                return 'text-black';
+        }
+    };
+
+    const getBackgroundClass = (name: string) => {
+        const lowerName = name.toLowerCase();
+        switch (lowerName) {
+            case 'eric':
+                return 'bg-green-50';
+            case 'harper':
+                return 'bg-purple-50';
+            case 'rishi':
+                return 'bg-amber-50';
+            case 'yasmin':
+                return 'bg-rose-50';
+            default:
+                return 'bg-card';
+        }
+    };
+
+    const getBorderClass = (name: string) => {
+        const lowerName = name.toLowerCase();
+        switch (lowerName) {
+            case 'eric':
+                return 'border-green-100';
+            case 'harper':
+                return 'border-purple-100';
+            case 'rishi':
+                return 'border-amber-100';
+            case 'yasmin':
+                return 'border-rose-100';
+            default:
+                return 'border-gray-100';
+        }
+    };
+
+    const renderMetadataValue = (key: string, value: string) => {
+        if (key === 'walletAddress' || key === 'contractAddress' ||
+            key === 'fromAddress' || key === 'toAddress' ||
+            key === 'poolAddress' || key === 'tokenAddress') {
+            return truncateAddress(value);
+        }
+        if (key === 'requestedAmount' || key === 'amount' || key === 'totalSupply') {
+            return `${parseFloat(value) / 1e18} ETH`;
+        }
+        return value;
+    };
+
     return (
-        <div className="relative bg-card p-4 mb-2 rounded-lg border shadow-sm">
+        <div className={`relative p-4 mb-2 rounded-lg shadow-sm ${getBackgroundClass(characterName)} ${getBorderClass(characterName)} border-2`}>
             <div className="flex flex-col gap-2 w-full">
                 {/* Header row with timestamp */}
                 <div className="flex items-start justify-between gap-2 w-full">
                     <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
-                        <span className="font-semibold text-foreground truncate">{characterName}</span>
+                        <span className={`font-semibold truncate ${getCharacterNameClass(characterName)}`}>
+                            {characterName}
+                        </span>
                         {eventName && (
                             <span className={`px-2 py-0.5 rounded-full text-xs ${getEventTagClass(eventName)} shrink-0`}>
                                 {eventName.replace('_', ' ')}
                             </span>
                         )}
                     </div>
-                    <span className="text-xs text-muted-foreground shrink-0">
+                    <span className="text-xs text-black shrink-0">
                         {timestamp.toLocaleTimeString()}
                     </span>
                 </div>
 
                 {/* Message */}
-                <div
-                    className={`text-sm cursor-pointer w-full ${!isExpanded ? 'line-clamp-2' : ''} ${eventName === 'system' ? 'font-black text-foreground' : 'text-muted-foreground'
-                        }`}
-                    onClick={() => setIsExpanded(!isExpanded)}
-                >
-                    {message}
+                <div className={`text-sm w-full text-black ${eventName === 'system' ? 'font-black' : ''}`}>
+                    {message.split(/(?<=[.!?])\s+/).map((sentence, index) => (
+                        <span key={index} className={index === 0 ? 'font-medium' : ''}>
+                            {sentence}{' '}
+                        </span>
+                    ))}
                 </div>
 
                 {/* Metadata */}
@@ -101,14 +172,18 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
                                 className="rounded-md"
                             />
                         )}
-                        {Object.entries(metadata).map(([key, value]) => (
-                            <div key={key} className="flex items-center gap-2">
-                                <span className="text-muted-foreground shrink-0">{key}:</span>
-                                <span className="text-foreground truncate">
-                                    {key === 'walletAddress' ? truncateAddress(value) : value}
-                                </span>
-                            </div>
-                        ))}
+                        <div className="grid grid-cols-1 gap-1">
+                            {Object.entries(metadata).map(([key, value]) => (
+                                <div key={key} className="flex items-center gap-2">
+                                    <span className="text-black font-medium capitalize shrink-0">
+                                        {key.replace(/([A-Z])/g, ' $1').toLowerCase()}:
+                                    </span>
+                                    <span className="text-black truncate">
+                                        {renderMetadataValue(key, value)}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>

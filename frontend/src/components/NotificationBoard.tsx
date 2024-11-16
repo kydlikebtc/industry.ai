@@ -1,24 +1,19 @@
 import { pixelify_sans } from '@/app/fonts';
-import { useEffect } from 'react';
-import { formatEther } from 'viem';
+import { NotificationData, mockNotifications } from '@/app/mockdata';
 import { useSendTransaction } from 'wagmi';
 import Notification from './Notification';
-export interface NotificationData {
-    id: string;
-    message: string;
-    timestamp: Date;
-}
 
 interface NotificationBoardProps {
-    notifications: NotificationData[];
+    notifications?: NotificationData[];
 }
 
 const NotificationBoard = ({ notifications }: NotificationBoardProps) => {
     const { sendTransaction } = useSendTransaction();
 
+    /*
     useEffect(() => {
         const recentFundRequests = notifications
-            .map(notification => {
+            ?.map(notification => {
                 const data = JSON.parse(notification.message);
                 return {
                     eventName: data.eventName,
@@ -28,10 +23,10 @@ const NotificationBoard = ({ notifications }: NotificationBoardProps) => {
             })
             .filter(event =>
                 event.eventName === 'funds_requested' &&
-                (new Date().getTime() - event.timestamp.getTime()) < 15000 // 15 seconds
+                (new Date().getTime() - event.timestamp.getTime()) < 15000
             );
 
-        if (recentFundRequests.length > 0) {
+        if (recentFundRequests && recentFundRequests.length > 0) {
             const request = recentFundRequests[0];
             sendTransaction({
                 to: request.metadata.toAddress,
@@ -39,6 +34,7 @@ const NotificationBoard = ({ notifications }: NotificationBoardProps) => {
             });
         }
     }, [notifications, sendTransaction]);
+    */
 
     return (
         <div className="w-full h-full max-h-screen flex flex-col bg-card p-4 overflow-hidden border-l rounded-lg">
@@ -47,34 +43,20 @@ const NotificationBoard = ({ notifications }: NotificationBoardProps) => {
             </h2>
             <div className="flex-1 overflow-y-auto">
                 <div className="space-y-2">
-                    {notifications.map((notification) => {
-                        const parsedData = JSON.parse(notification.message);
-                        return (
-                            <Notification
-                                key={notification.id}
-                                characterName={parsedData.characterId}
-                                timestamp={new Date(parsedData.createdAt)}
-                                message={formatMessage(parsedData)}
-                                eventName={parsedData.eventName}
-                                metadata={parsedData.metadata}
-                            />
-                        );
-                    })}
+                    {mockNotifications.map((notification, index) => (
+                        <Notification
+                            key={index}
+                            message={notification.message}
+                            timestamp={notification.timestamp}
+                            characterName={notification.characterName}
+                            eventName={notification.eventName}
+                            metadata={notification.metadata}
+                        />
+                    ))}
                 </div>
             </div>
         </div>
     );
-};
-
-const formatMessage = (data: any): string => {
-    switch (data.eventName) {
-        case 'wallet_created':
-            return `${data.characterId}'s wallet was created`;
-        case 'funds_requested':
-            return `${data.characterId} requested ${formatEther(data.metadata.requestedAmount)} ETH`;
-        default:
-            return `System event: ${data.eventName}`;
-    }
 };
 
 export default NotificationBoard;

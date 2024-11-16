@@ -24,18 +24,20 @@ export class God {
     sessionId: string;
     userId: string;
     walletAddress: string;
-
+    chatMode: 'STANDARD' | 'RECURSIVE';
     constructor(
         onMessageReceived: (message: string) => void,
         onError: (error: string) => void,
         sessionId: string,
         userId: string,
-        walletAddress: string
+        walletAddress: string,
+        chatMode: 'STANDARD' | 'RECURSIVE'
     ) {
         this.sessionId = sessionId;
         this.onMessageReceived = onMessageReceived;
         this.onError = onError;
         this.userId = userId;
+        this.chatMode = chatMode;
         this.walletAddress = walletAddress;
         this.initializeWebSocket(sessionId);
     }
@@ -92,6 +94,10 @@ export class God {
         };
     }
 
+    public setChatMode(chatMode: 'STANDARD' | 'RECURSIVE') {
+        this.chatMode = chatMode;
+    }
+
     sendMessage(message: string) {
         if (this.websocket && this.websocket.readyState === WebSocket.OPEN) {
             const payload = {
@@ -102,6 +108,7 @@ export class God {
                 sessionId: this.sessionId,
                 sendersWalletAddress: this.walletAddress,
                 temperature: 0.1,
+                chatMode: this.chatMode,
                 maxLength: 500,
                 topP: 0.9
             };

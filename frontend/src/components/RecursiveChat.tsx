@@ -16,7 +16,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
-export default function RecursiveChat() {
+export default function RecursiveChat({ chatMode, setChatMode }: { chatMode: 'STANDARD' | 'RECURSIVE', setChatMode: (mode: 'STANDARD' | 'RECURSIVE') => void }) {
     return (
         <Card className="w-full">
             <CardHeader>
@@ -26,21 +26,21 @@ export default function RecursiveChat() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <Select>
-                    <SelectTrigger className="w-full">
+                <Select value={chatMode} onValueChange={setChatMode}>
+                    <SelectTrigger className="w-full" defaultValue={"STANDARD"}>
                         <SelectValue placeholder="Select chat mode" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="standard">
+                        <SelectItem value="STANDARD">
                             Standard Chat
                             <span className="block text-xs text-muted-foreground">
-                                Direct communication between agents
+                                Direct communication between you and the agents
                             </span>
                         </SelectItem>
-                        <SelectItem value="recursive">
+                        <SelectItem value="RECURSIVE">
                             Recursive Chat
                             <span className="block text-xs text-muted-foreground">
-                                Agents can have internal dialogues and deeper reasoning
+                                Agents discuss with each other without a human in the loop
                             </span>
                         </SelectItem>
                     </SelectContent>

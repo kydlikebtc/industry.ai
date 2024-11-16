@@ -147,6 +147,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
     const [animationFrame, setAnimationFrame] = useState<number>(0);
     const [isHoveredIndex, setIsHoveredIndex] = useState<number | null>(null);
     const [inputValue, setInputValue] = useState<string>('');
+    const [chatMode, setChatMode] = useState<'STANDARD' | 'RECURSIVE'>('STANDARD');
     const [notifications, setNotifications] = useState<NotificationData[]>([]);
     const [chatMessages, setChatMessages] = useState<{
         id: string;
@@ -487,7 +488,8 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                     },
                     sessionId,
                     userId,
-                    walletAddress
+                    walletAddress,
+                    chatMode
                 );
             }
 
@@ -583,6 +585,12 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
             }
         };
     }, []); // Empty dependency array ensures this runs only once
+
+    useEffect(() => {
+        if (godRef.current) {
+            godRef.current.setChatMode(chatMode);
+        }
+    }, [chatMode]);
 
     // Initialize AI states for uncontrolled characters
     useEffect(() => {
@@ -919,6 +927,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                     message: inputValue,
                     timestamp: new Date(),
                     characterName: 'You',
+                    chatMode: chatMode,
                     metadata: null,
                 }, ...prev].slice(0, 50));
 
@@ -969,6 +978,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                 id: crypto.randomUUID(),
                 message: message,
                 timestamp: new Date(),
+                chatMode: chatMode,
                 characterName: 'You',
             }].slice(-50));
 
@@ -990,7 +1000,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
             {/* Left Column - RecursiveChat and Chat */}
             <div className="hidden md:flex md:flex-col w-80 h-full gap-4">
                 <div className="h-auto">
-                    <RecursiveChat />
+                    <RecursiveChat chatMode={chatMode} setChatMode={setChatMode} />
                 </div>
                 <div className="flex-1 overflow-hidden rounded-lg">
                     <Chat

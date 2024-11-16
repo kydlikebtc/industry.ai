@@ -154,6 +154,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
         message: string;
         timestamp: Date;
         characterName: string;
+        address?: `0x${string}`;
     }[]>([]);
 
     // Store Character instances in a ref to ensure they are only created once
@@ -207,6 +208,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                 message: messageChunk,
                 timestamp: new Date(),
                 characterName: characterName,
+                address: charactersRef.current?.[index]?.address || undefined,
             }].slice(-50));
         }
     }, []);

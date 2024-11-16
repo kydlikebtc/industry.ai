@@ -29,7 +29,7 @@ const ChatBar: React.FC<ChatBarProps> = ({ onSendMessage, disabled = false }) =>
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 disabled={disabled}
-                placeholder="Ask the AI characters a question..."
+                placeholder="Just ask..."
                 className="flex-1 px-4 py-2 rounded-lg bg-transparent 
                           border border-navy-600/20 text-black placeholder-navy-400
                           focus:outline-none focus:ring-2 focus:ring-navy-300"

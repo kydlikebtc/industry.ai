@@ -19,6 +19,7 @@ export class Character {
     onError: (index: number, error: string) => void;
     sessionId: string;
     userId: string;
+    address?: `0x${string}`;
     currentBubbleDimensions: CharacterBounds | null = null;
 
     constructor(
@@ -29,7 +30,8 @@ export class Character {
         onMessageReceived: (index: number, message: string) => void,
         onError: (index: number, error: string) => void,
         sessionId: string,
-        userId: string
+        userId: string,
+        address?: `0x${string}`
     ) {
         this.index = index;
         this.name = name;
@@ -37,6 +39,7 @@ export class Character {
         this.onMessageReceived = onMessageReceived;
         this.onError = onError;
         this.userId = userId;
+        this.address = address;
         this.loadSprite(spriteSrc, onLoad);
         this.initializeWebSocket(sessionId);
         Character.allCharacters.push(this);
@@ -155,6 +158,10 @@ export class Character {
             const bubbleY = scaledY;
             this.drawSpeechBubble(ctx, bubbleX, bubbleY, message);
         }
+    }
+
+    public setAddress(address: `0x${string}`) {
+        this.address = address;
     }
 
     drawSpeechBubble(ctx: CanvasRenderingContext2D, x: number, y: number, message: string) {

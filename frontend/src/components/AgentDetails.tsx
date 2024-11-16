@@ -20,11 +20,6 @@ const AgentDetails = ({ ens, chain, resources = [] }: AgentDetailsProps) => {
                 </div>
 
                 <div>
-                    <h3 className="text-sm font-semibold text-blue-900">Chain</h3>
-                    <p className="text-sm">{chain || 'Not set'}</p>
-                </div>
-
-                <div>
                     <h3 className="text-sm font-semibold text-blue-900">Resources</h3>
                     {resources.length > 0 ? (
                         <ul className="text-sm list-disc list-inside">

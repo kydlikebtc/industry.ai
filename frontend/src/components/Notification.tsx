@@ -1,6 +1,8 @@
 import { truncateAddress } from '@/utils/formatters';
+import { Name } from '@coinbase/onchainkit/identity';
 import Image from 'next/image';
 import { useState } from 'react';
+import { base } from 'wagmi/chains';
 
 interface NotificationProps {
     message: string;
@@ -48,6 +50,39 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
                                 src={metadata.url}
                                 unoptimized={true}
                                 alt="Generated image"
+                                width={400}
+                                height={400}
+                                className="rounded-md"
+                            />
+                        )}
+                        {eventName === "basename_managed" && metadata.basename && (
+                            <Name address={metadata.walletAddress as `0x${string}`} chain={base} />
+                        )}
+                        {eventName === "uniswap_pool_created" && (
+                            <Image
+                                src={"https://i.pinimg.com/originals/1d/cc/84/1dcc8458abdeee8e528d7996047d1000.jpg"}
+                                unoptimized={true}
+                                alt="Uniswap pool"
+                                width={400}
+                                height={400}
+                                className="rounded-md"
+                            />
+                        )}
+                        {eventName === "nft_created" && (
+                            <Image
+                                src={"https://avatars.githubusercontent.com/u/60056322?s=280&v=4"}
+                                unoptimized={true}
+                                alt="NFT"
+                                width={400}
+                                height={400}
+                                className="rounded-md"
+                            />
+                        )}
+                        {eventName === "contract_deployed" && (
+                            <Image
+                                src={"https://images.mirror-media.xyz/publication-images/cgqxxPdUFBDjgKna_dDir.png?height=1200&width=1200"}
+                                unoptimized={true}
+                                alt="Contract deployed"
                                 width={400}
                                 height={400}
                                 className="rounded-md"

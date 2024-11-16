@@ -1,14 +1,17 @@
 "use client"
 
 import { pixelify_sans } from '@/app/fonts';
+import { Name } from '@coinbase/onchainkit/identity';
 import { WalletDefault } from '@coinbase/onchainkit/wallet';
 import { useEffect, useRef, useState } from 'react';
 import { IoSend } from "react-icons/io5";
+import { base } from 'wagmi/chains';
 
 interface ChatMessage {
     id: string;
     message: string;
     timestamp: Date;
+    address?: `0x${string}`;
     characterName: string;
 }
 
@@ -95,7 +98,7 @@ const Chat = ({ messages, onSendMessage, disabled = false }: ChatProps) => {
                         <div key={msg.id} className="space-y-1">
                             <div className="flex items-center gap-2">
                                 <span className={`font-semibold text-sm ${characterColors[msg.characterName] || 'text-gray-600'}`}>
-                                    {msg.characterName}
+                                    {msg.characterName} {msg.address && (<Name address={msg.address} chain={base} />)}
                                 </span>
                                 <span className="text-xs text-gray-500">
                                     {msg.timestamp.toLocaleTimeString()}
@@ -116,7 +119,7 @@ const Chat = ({ messages, onSendMessage, disabled = false }: ChatProps) => {
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
                             disabled={disabled}
-                            placeholder="Ask the AI characters a question..."
+                            placeholder="Just ask..."
                             className="flex-1 px-4 py-2 rounded-lg bg-transparent 
                                     border border-navy-600/20 text-black placeholder-navy-400
                                     focus:outline-none focus:ring-2 focus:ring-navy-300"

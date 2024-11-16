@@ -1,19 +1,26 @@
 'use client'
 import { pixelify_sans } from '@/app/fonts';
-
+import { Button } from "@/components/ui/button";
 import { useCharacterSelect } from '@/contexts/CharacterSelectContext';
 
 function CreateCharacterButton() {
-    const { setIsOpen } = useCharacterSelect()
+    const { setIsOpen } = useCharacterSelect();
+
+    const handleClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsOpen(true);
+    };
 
     return (
-        <button
-            onClick={() => setIsOpen(true)}
-            className={`${pixelify_sans.className} bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded`}
+        <Button
+            onClick={handleClick}
+            variant="default"
+            className={`${pixelify_sans.className} relative z-50 transition-colors hover:bg-primary/90`}
         >
             Create Character
-        </button>
-    )
+        </Button>
+    );
 }
 
-export default CreateCharacterButton 
+export default CreateCharacterButton; 

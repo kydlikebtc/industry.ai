@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/com
 import { Skeleton } from "@/components/ui/skeleton"
 import { useCharacterSelect } from '@/contexts/CharacterSelectContext'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
 import { useState } from 'react'
 import SkillSelect from './SkillSelect'
 
@@ -62,18 +63,18 @@ function StyleSelector({
         <div className="space-y-2">
             <div className="flex items-center justify-between">
                 <span className={`${pixelify_sans.className} text-blue-900 font-bold text-lg`}>{title}</span>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 text-black">
                     <button
                         onClick={onPrevious}
-                        className="p-2 hover:bg-gray-100 rounded-full"
+                        className="p-2 hover:bg-gray-100 rounded-full text-black"
                         disabled={isLoading}
                     >
                         <ChevronLeft />
                     </button>
-                    <span>{current + 1}/{CHARACTER_PRESETS.length}</span>
+                    <span className="text-black">{current + 1}/{CHARACTER_PRESETS.length}</span>
                     <button
                         onClick={onNext}
-                        className="p-2 hover:bg-gray-100 rounded-full"
+                        className="p-2 hover:bg-gray-100 rounded-full text-black"
                         disabled={isLoading}
                     >
                         <ChevronRight />
@@ -92,8 +93,14 @@ function StyleSelector({
                     >
                         {CHARACTER_PRESETS.map((char) => (
                             <div key={char.id} className="w-1/4 h-full flex items-center justify-center bg-gray-200">
-                                <div className="w-32 h-32 bg-gray-300 rounded-lg flex items-center justify-center">
-                                    {char.name}
+                                <div className="relative w-32 h-32">
+                                    <Image
+                                        src={`/${char.name.toLowerCase()}_sprite.png`}
+                                        alt={char.name}
+                                        fill
+                                        className="object-contain"
+                                        priority
+                                    />
                                 </div>
                             </div>
                         ))}
@@ -166,12 +173,12 @@ function CharacterSelect() {
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetContent side="left" className="w-[400px] sm:w-[540px] overflow-y-auto bg-card">
+            <SheetContent side="left" className="w-[400px] sm:w-[540px] overflow-y-auto bg-card [&>button]:text-black">
                 <SheetHeader>
                     <SheetTitle className={`${pixelify_sans.className} text-blue-900`}>
                         Create Your Character
                     </SheetTitle>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-black">
                         Select your character and customize their attributes.
                     </p>
                 </SheetHeader>
@@ -192,7 +199,7 @@ function CharacterSelect() {
                         </span>
                         <Select value={selected.model} onValueChange={handleModelChange}>
                             <SelectTrigger className="text-black">
-                                <SelectValue placeholder="Select a model" />
+                                <SelectValue placeholder="Select a model" className="text-black" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="claude-3.5-sonnet" className="text-black">Claude 3.5 Sonnet</SelectItem>
@@ -210,7 +217,7 @@ function CharacterSelect() {
                             value={selected.prompt}
                             onChange={handlePromptChange}
                             placeholder="Enter character prompt"
-                            className="w-full text-black"
+                            className="w-full text-black placeholder:text-gray-500"
                         />
                     </div>
 
@@ -219,7 +226,7 @@ function CharacterSelect() {
                         <span className={`${pixelify_sans.className} text-blue-900 font-bold text-lg block mb-2`}>
                             Skills
                         </span>
-                        <p className="text-sm text-gray-500 mb-4">
+                        <p className="text-sm text-black mb-4">
                             These are {CHARACTER_PRESETS[selected.character].name}&apos;s specialized skills
                         </p>
                         {isLoading ? (

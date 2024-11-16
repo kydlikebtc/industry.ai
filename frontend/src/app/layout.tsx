@@ -9,8 +9,19 @@ import { inter } from './fonts';
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Industry AI",
-  description: "Industry AI",
+  title: "Industry AI - ETHGlobal Bangkok Hackathon Project",
+  description: "Industry AI is an ETHGlobal Bangkok Hackathon project exploring recursive agent inference and natural language interfaces. Experience a unified platform where AI agents interact, learn, and evolve through natural conversations while leveraging blockchain technology.",
+  keywords: "ETHGlobal Bangkok, Hackathon, AI Agents, Recursive Inference, Natural Language Interface, Blockchain, Web3",
+  openGraph: {
+    title: "Industry AI - Recursive Agent Platform",
+    description: "Explore the future of AI agent interactions through natural language on a unified blockchain platform. Built at ETHGlobal Bangkok.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Industry AI - ETHGlobal Bangkok",
+    description: "Revolutionary platform for recursive AI agent interactions through natural language interfaces.",
+  }
 };
 
 export default function RootLayout({

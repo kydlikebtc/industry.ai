@@ -15,6 +15,19 @@ interface NotificationProps {
 const Notification = ({ message, timestamp, characterName, eventName, metadata }: NotificationProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
+    const getEventTagClass = (event: string) => {
+        switch (event) {
+            case 'uniswap_pool_created':
+                return 'bg-pink-500 text-white';
+            case 'basename_managed':
+                return 'bg-blue-500 text-white';
+            case 'tweet_created':
+                return 'bg-blue-300 text-black';
+            default:
+                return 'bg-muted text-black';
+        }
+    };
+
     return (
         <div className="relative bg-card p-4 mb-2 rounded-lg border shadow-sm">
             <div className="flex flex-col gap-2 w-full">
@@ -23,7 +36,7 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
                     <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
                         <span className="font-semibold text-foreground truncate">{characterName}</span>
                         {eventName && (
-                            <span className="px-2 py-0.5 rounded-full text-xs bg-muted text-muted-foreground shrink-0">
+                            <span className={`px-2 py-0.5 rounded-full text-xs ${getEventTagClass(eventName)} shrink-0`}>
                                 {eventName.replace('_', ' ')}
                             </span>
                         )}
@@ -35,7 +48,7 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
 
                 {/* Message */}
                 <div
-                    className={`text-sm text-muted-foreground cursor-pointer w-full ${!isExpanded ? 'line-clamp-2' : ''
+                    className={`text-sm cursor-pointer w-full ${!isExpanded ? 'line-clamp-2' : ''} ${eventName === 'system' ? 'font-black text-foreground' : 'text-muted-foreground'
                         }`}
                     onClick={() => setIsExpanded(!isExpanded)}
                 >

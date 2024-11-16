@@ -97,8 +97,30 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
         return value;
     };
 
+    const getExternalLink = (eventName: string, metadata: Record<string, string>): string | null => {
+        switch (eventName) {
+            case 'contract_deployed':
+                return `https://basescan.org/${metadata.contractAddress}`;
+            case 'uniswap_pool_created':
+                return `https://dexscreener.com/base/${metadata.poolAddress}`;
+            case 'nft_created':
+                return `https://zora.co/collect/zora:${metadata.contractAddress}`;
+            default:
+                return null;
+        }
+    };
+
     return (
-        <div className={`relative p-4 mb-2 rounded-lg shadow-sm ${getBackgroundClass(characterName)} ${getBorderClass(characterName)} border-2`}>
+        <div
+            className={`relative p-4 mb-2 rounded-lg shadow-sm ${getBackgroundClass(characterName)} ${getBorderClass(characterName)} border-2 ${['contract_deployed', 'uniswap_pool_created', 'nft_created'].includes(eventName || '') ? 'cursor-pointer hover:opacity-90' : ''
+                } text-black`}
+            onClick={() => {
+                const link = metadata && eventName ? getExternalLink(eventName, metadata) : null;
+                if (link) {
+                    window.open(link, '_blank');
+                }
+            }}
+        >
             <div className="flex flex-col gap-2 w-full">
                 {/* Header row with timestamp */}
                 <div className="flex items-start justify-between gap-2 w-full">
@@ -128,7 +150,7 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
 
                 {/* Metadata */}
                 {metadata && (
-                    <div className="mt-1 p-2 rounded-md bg-muted/50 text-xs font-mono w-full">
+                    <div className="mt-1 p-2 rounded-md bg-muted/50 text-xs font-mono w-full text-black">
                         {eventName === "image_created" && metadata.url && (
                             <Image
                                 src={metadata.url}

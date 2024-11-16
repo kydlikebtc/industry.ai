@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.7.1",
+    "@clerk/nextjs": "^6.3.4",
     "@coinbase/onchainkit": "^0.35.5",
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/modifiers": "^7.0.0",

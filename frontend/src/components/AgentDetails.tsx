@@ -13,7 +13,7 @@ const AgentDetails = ({ ens, chain, resources = [] }: AgentDetailsProps) => {
         <div className="bg-card rounded-lg p-4 h-full overflow-hidden">
             <h2 className={`${pixelify_sans.className} text-xl mb-4 text-blue-900`}>Agent Details</h2>
 
-            <div className="space-y-4">
+            <div className="space-y-4 text-black">
                 <div>
                     <h3 className="text-sm font-semibold text-blue-900">ENS</h3>
                     <p className="text-sm">{ens || 'Not set'}</p>

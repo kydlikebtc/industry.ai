@@ -159,16 +159,16 @@ export class Character {
 
     drawSpeechBubble(ctx: CanvasRenderingContext2D, x: number, y: number, message: string) {
         // Bubble styling constants
-        const padding = 15;
+        const padding = 20;
         const maxWidth = 800;
         const minWidth = 200;
-        const lineHeight = 20;
-        const fontSize = 14;
-        const borderRadius = 10;
-        const tailHeight = 15;
+        const lineHeight = 32;
+        const fontSize = 20;
+        const borderRadius = 12;
+        const tailHeight = 20;
 
-        // Set text properties
-        ctx.font = `${fontSize}px Arial`;
+        // Set text properties with bold font for better legibility
+        ctx.font = `bold ${fontSize}px Arial`;
         ctx.textBaseline = 'top';
         ctx.textAlign = 'left';
 

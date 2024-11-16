@@ -105,6 +105,8 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
                 return `https://dexscreener.com/base/${metadata.poolAddress.toLowerCase()}`;
             case 'nft_created':
                 return `https://zora.co/collect/zora:${metadata.contractAddress.toLowerCase()}`;
+            case 'tweet_created':
+                return `https://x.com/i/${metadata.tweetId}`;
             default:
                 return null;
         }

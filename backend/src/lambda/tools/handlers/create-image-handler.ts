@@ -94,7 +94,7 @@ export async function createImage({ createdBy, characterId, sessionId, imageName
             `Okay ill send it to the Office so you can see it.`);
 
         logConsole.info('Image generation and upload complete', { imageName, imageKey });
-        return { imageName, imageKey, url, description: prompt };
+        return { message: `Image created successfully with imageKey: ${imageKey} and NFTName: ${imageName}`, imageName, imageKey, url, description: prompt };
 
     } catch (error) {
         await sendCharacterMessage(characterId, sessionId, docClient,

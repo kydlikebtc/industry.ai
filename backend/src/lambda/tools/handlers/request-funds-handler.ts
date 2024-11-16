@@ -1,7 +1,7 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import { ethers } from "ethers";
-import { logConsole, sendGodMessage } from "../../../utils";
+import { logConsole, sendCharacterMessage, sendGodMessage } from "../../../utils";
 import { createItem } from "../../dynamo_v3";
 import { getWallet } from "../utils/getWallet";
 
@@ -33,6 +33,12 @@ export async function requestFunds({
             value: ethers.parseEther("0.001").toString(), // Request a small amount (0.001 ETH)
             from: sendersWalletAddress,
         };
+        await sendCharacterMessage(
+            characterId,
+            sessionId,
+            docClient,
+            "Going to send you a pre-made transaction request to your wallet."
+        );
 
         // Log the request for debugging
         logConsole.info(`Creating fund request from ${sendersWalletAddress} to ${agentWallet.walletAddress}`);

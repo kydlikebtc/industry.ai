@@ -158,96 +158,148 @@ export class Character {
     }
 
     drawSpeechBubble(ctx: CanvasRenderingContext2D, x: number, y: number, message: string) {
-        // Scale bubble parameters based on CHARACTER_SCALE
-        const bubblePadding = 10 * CHARACTER_SCALE;
-        const maxWidth = 200 * CHARACTER_SCALE;
-        const lineHeight = 18 * CHARACTER_SCALE;
-        const fontSize = 9 * CHARACTER_SCALE;
-        const fontFamily = 'Arial';
+        // Bubble styling constants
+        const padding = 20;
+        const maxWidth = 800;
+        const minWidth = 200;
+        const lineHeight = 32;
+        const fontSize = 20;
+        const borderRadius = 12;
+        const tailHeight = 20;
 
-        ctx.save();
-        ctx.globalAlpha = 0.9;
+        // Set text properties with bold font for better legibility
+        ctx.font = `bold ${fontSize}px Arial`;
+        ctx.textBaseline = 'top';
+        ctx.textAlign = 'left';
 
-        // Set scaled font
-        ctx.font = `${fontSize}px ${fontFamily}`;
-        ctx.fillStyle = 'black';
-
-        // Split message into words and handle text wrapping
+        // Calculate optimal width for the text
         const words = message.split(' ');
+        const spaceWidth = ctx.measureText(' ').width;
+        const wordWidths = words.map(word => ctx.measureText(word).width);
+
+        // Try to fit text in one line first
+        const totalWidth = wordWidths.reduce((sum, width) => sum + width, 0) +
+            (words.length - 1) * spaceWidth;
+
+        // Target width: try to keep text in as few lines as possible while staying within bounds
+        const targetWidth = Math.min(maxWidth, Math.max(minWidth, totalWidth + padding * 2));
+
+        // Word wrap the text
         const lines: string[] = [];
-        let currentLine = '';
+        let currentLine = words[0];
+        let currentWidth = wordWidths[0];
 
-        for (let i = 0; i < words.length; i++) {
+        for (let i = 1; i < words.length; i++) {
             const word = words[i];
-            const testLine = currentLine + word + ' ';
-            const metrics = ctx.measureText(testLine);
-            const testWidth = metrics.width;
+            const wordWidth = wordWidths[i];
+            const testWidth = currentWidth + spaceWidth + wordWidth;
 
-            if (testWidth > maxWidth - bubblePadding * 2 && i > 0) {
-                lines.push(currentLine.trim());
-                currentLine = word + ' ';
+            if (testWidth <= targetWidth - padding * 2) {
+                currentLine += ' ' + word;
+                currentWidth = testWidth;
             } else {
-                currentLine = testLine;
+                lines.push(currentLine);
+                currentLine = word;
+                currentWidth = wordWidth;
             }
         }
-        lines.push(currentLine.trim());
+        lines.push(currentLine);
 
         // Calculate bubble dimensions
-        const bubbleWidth = maxWidth;
-        const bubbleHeight = lines.length * lineHeight + bubblePadding * 2;
+        const bubbleWidth = Math.min(
+            maxWidth,
+            Math.max(minWidth, Math.max(...lines.map(line => ctx.measureText(line).width)) + padding * 2)
+        );
+        const bubbleHeight = (lines.length * lineHeight) + (padding * 2);
 
-        // Adjust bubble position for larger characters
-        const bubbleX = x - bubbleWidth / 2;
-        const bubbleY = y - bubbleHeight - (20 * CHARACTER_SCALE);
+        // Calculate initial position (centered above character)
+        let bubbleX = x - (bubbleWidth / 2);
+        let bubbleY = y - bubbleHeight - tailHeight;
 
-        // Store current bubble dimensions for collision detection
+        // Adjust for screen edges
+        const canvas = ctx.canvas;
+        const margin = 20;
+
+        // Horizontal adjustment
+        if (bubbleX < margin) {
+            bubbleX = margin;
+        } else if (bubbleX + bubbleWidth > canvas.width - margin) {
+            bubbleX = canvas.width - margin - bubbleWidth;
+        }
+
+        // Vertical adjustment
+        let tailPosition: 'top' | 'bottom' = 'bottom';
+        if (bubbleY < margin) {
+            // Place bubble below character if too high
+            bubbleY = y + SPRITE_SIZE * SCALE_FACTOR + tailHeight;
+            tailPosition = 'top';
+        }
+
+        // Store dimensions for collision detection
         this.currentBubbleDimensions = {
             x: bubbleX,
             y: bubbleY,
             width: bubbleWidth,
-            height: bubbleHeight + (20 * CHARACTER_SCALE) // Include tail height
+            height: bubbleHeight + tailHeight
         };
 
-        // Check for collisions with other characters' bubbles
+        // Check for collisions with other bubbles
         if (this.checkBubbleCollision()) {
-            // If collision detected, move bubble up
-            this.currentBubbleDimensions.y -= bubbleHeight;
+            // If collision, move bubble up further
+            const adjustment = bubbleHeight + tailHeight;
+            this.currentBubbleDimensions.y -= adjustment;
+            bubbleY -= adjustment;
+            tailPosition = 'bottom';
         }
 
-        // Draw bubble background at potentially adjusted position
+        // Draw bubble
+        ctx.save();
+
+        // Background
         ctx.fillStyle = 'white';
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2 * CHARACTER_SCALE;
+        ctx.lineWidth = 2;
 
-        this.drawRoundedRectangle(
-            ctx,
-            this.currentBubbleDimensions.x,
-            this.currentBubbleDimensions.y,
-            bubbleWidth,
-            bubbleHeight,
-            10 * CHARACTER_SCALE
-        );
-
-        // Draw the bubble tail (pointer)
+        // Draw rounded rectangle
         ctx.beginPath();
-        ctx.moveTo(x - (10 * CHARACTER_SCALE), y - (20 * CHARACTER_SCALE));
-        ctx.lineTo(x, y - (10 * CHARACTER_SCALE));
-        ctx.lineTo(x + (10 * CHARACTER_SCALE), y - (20 * CHARACTER_SCALE));
+        ctx.moveTo(bubbleX + borderRadius, bubbleY);
+        ctx.lineTo(bubbleX + bubbleWidth - borderRadius, bubbleY);
+        ctx.quadraticCurveTo(bubbleX + bubbleWidth, bubbleY, bubbleX + bubbleWidth, bubbleY + borderRadius);
+        ctx.lineTo(bubbleX + bubbleWidth, bubbleY + bubbleHeight - borderRadius);
+        ctx.quadraticCurveTo(bubbleX + bubbleWidth, bubbleY + bubbleHeight, bubbleX + bubbleWidth - borderRadius, bubbleY + bubbleHeight);
+        ctx.lineTo(bubbleX + borderRadius, bubbleY + bubbleHeight);
+        ctx.quadraticCurveTo(bubbleX, bubbleY + bubbleHeight, bubbleX, bubbleY + bubbleHeight - borderRadius);
+        ctx.lineTo(bubbleX, bubbleY + borderRadius);
+        ctx.quadraticCurveTo(bubbleX, bubbleY, bubbleX + borderRadius, bubbleY);
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
 
-        // Draw text at potentially adjusted position
-        ctx.fillStyle = 'black';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'top';
-        for (let i = 0; i < lines.length; i++) {
-            ctx.fillText(
-                lines[i],
-                this.currentBubbleDimensions.x + bubblePadding,
-                this.currentBubbleDimensions.y + bubblePadding + i * lineHeight
-            );
+        // Draw tail
+        ctx.beginPath();
+        const tailX = Math.min(Math.max(x, bubbleX + 20), bubbleX + bubbleWidth - 20);
+
+        if (tailPosition === 'bottom') {
+            ctx.moveTo(tailX - 10, bubbleY + bubbleHeight);
+            ctx.lineTo(tailX, bubbleY + bubbleHeight + tailHeight);
+            ctx.lineTo(tailX + 10, bubbleY + bubbleHeight);
+        } else {
+            ctx.moveTo(tailX - 10, bubbleY);
+            ctx.lineTo(tailX, bubbleY - tailHeight);
+            ctx.lineTo(tailX + 10, bubbleY);
         }
+
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Draw text
+        ctx.fillStyle = 'black';
+        lines.forEach((line, i) => {
+            const textX = bubbleX + padding;
+            const textY = bubbleY + padding + (i * lineHeight);
+            ctx.fillText(line, textX, textY);
+        });
 
         ctx.restore();
     }

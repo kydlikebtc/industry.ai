@@ -26,6 +26,7 @@ import { Character } from './Character';
 import Chat from './Chat';
 import { God } from './God';
 import NotificationBoard, { NotificationData } from './NotificationBoard';
+import RecursiveChat from './RecursiveChat';
 
 // Function to get a random integer between min and max
 function getRandomInt(min: number, max: number) {
@@ -603,7 +604,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                     }
                 } else if (index === controlledCharacterIndex && state.ai) {
                     // Remove AI state from the newly controlled character
-                    const { ai, ...rest } = state;
+                    const { ai: _, ...rest } = state;
                     return rest;
                 }
                 return state;
@@ -979,13 +980,18 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
     // Return statement with conditional rendering
     return (
         <div className="relative flex flex-col md:flex-row gap-4 h-[calc(100vh-5rem)] max-h-[calc(100vh-7rem)]">
-            {/* Left Column - Chat */}
-            <div className="hidden md:block w-80 h-full overflow-hidden rounded-lg">
-                <Chat
-                    messages={chatMessages}
-                    onSendMessage={handleGlobalMessage}
-                    disabled={!isInitialized}
-                />
+            {/* Left Column - RecursiveChat and Chat */}
+            <div className="hidden md:flex md:flex-col w-80 h-full gap-4">
+                <div className="h-auto">
+                    <RecursiveChat />
+                </div>
+                <div className="flex-1 overflow-hidden rounded-lg">
+                    <Chat
+                        messages={chatMessages}
+                        onSendMessage={handleGlobalMessage}
+                        disabled={!isInitialized}
+                    />
+                </div>
             </div>
 
             {/* Middle Column - Game Canvas */}

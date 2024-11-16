@@ -1,5 +1,6 @@
 'use client'
 import { pixelify_sans } from '@/app/fonts';
+import { Button } from "@/components/ui/button";
 import { useCharacterSelect } from '@/contexts/CharacterSelectContext';
 
 function CreateCharacterButton() {
@@ -12,13 +13,13 @@ function CreateCharacterButton() {
     };
 
     return (
-        <button
+        <Button
             onClick={handleClick}
-            type="button"
-            className={`${pixelify_sans.className} bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded cursor-pointer`}
+            variant="default"
+            className={`${pixelify_sans.className} relative z-50 transition-colors hover:bg-primary/90`}
         >
             Create Character
-        </button>
+        </Button>
     );
 }
 

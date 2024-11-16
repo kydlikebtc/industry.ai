@@ -1,5 +1,6 @@
 "use client";
 
+import { useCharacterSelect } from '@/contexts/CharacterSelectContext';
 import {
     AI_MOVE_DURATION_MAX,
     AI_MOVE_DURATION_MIN,
@@ -23,6 +24,7 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import AgentDetails from './AgentDetails';
 import { Character } from './Character';
+import CharacterSelect from './CharacterSelect';
 import Chat from './Chat';
 import { God } from './God';
 import NotificationBoard, { NotificationData } from './NotificationBoard';
@@ -158,6 +160,8 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
 
     // Add godRef to store the God instance
     const godRef = useRef<God | null>(null);
+
+    const { isOpen } = useCharacterSelect();
 
     // Stable function references using useCallback
     const handleCharacterMessage = useCallback((index: number, messageChunk: string) => {
@@ -604,7 +608,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                     }
                 } else if (index === controlledCharacterIndex && state.ai) {
                     // Remove AI state from the newly controlled character
-                    const { ai: _, ...rest } = state;
+                    const { ai: _unused, ...rest } = state;
                     return rest;
                 }
                 return state;
@@ -980,6 +984,9 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
     // Return statement with conditional rendering
     return (
         <div className="relative flex flex-col md:flex-row gap-4 h-[calc(100vh-5rem)] max-h-[calc(100vh-7rem)]">
+            {/* Render CharacterSelect when isOpen is true */}
+            {isOpen && <CharacterSelect />}
+
             {/* Left Column - RecursiveChat and Chat */}
             <div className="hidden md:flex md:flex-col w-80 h-full gap-4">
                 <div className="h-auto">

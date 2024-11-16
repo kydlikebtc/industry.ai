@@ -1,5 +1,6 @@
 'use client'
 
+import { pixelify_sans } from '@/app/fonts'
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet'
@@ -60,7 +61,7 @@ function StyleSelector({
     return (
         <div className="space-y-2">
             <div className="flex items-center justify-between">
-                <span className="font-bold text-lg">{title}</span>
+                <span className={`${pixelify_sans.className} text-blue-900 font-bold text-lg`}>{title}</span>
                 <div className="flex items-center gap-4">
                     <button
                         onClick={onPrevious}
@@ -165,9 +166,11 @@ function CharacterSelect() {
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetContent side="left" className="w-[400px] sm:w-[540px] overflow-y-auto">
+            <SheetContent side="left" className="w-[400px] sm:w-[540px] overflow-y-auto bg-card">
                 <SheetHeader>
-                    <SheetTitle>Create Your Character</SheetTitle>
+                    <SheetTitle className={`${pixelify_sans.className} text-blue-900`}>
+                        Create Your Character
+                    </SheetTitle>
                     <p className="text-sm text-gray-500">
                         Select your character and customize their attributes.
                     </p>
@@ -184,32 +187,38 @@ function CharacterSelect() {
 
                     {/* Model Selection */}
                     <div>
-                        <span className="font-bold text-lg block mb-2">Model</span>
+                        <span className={`${pixelify_sans.className} text-blue-900 font-bold text-lg block mb-2`}>
+                            Model
+                        </span>
                         <Select value={selected.model} onValueChange={handleModelChange}>
-                            <SelectTrigger>
+                            <SelectTrigger className="text-black">
                                 <SelectValue placeholder="Select a model" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="claude-3.5-sonnet">Claude 3.5 Sonnet</SelectItem>
-                                <SelectItem value="gpt-4">GPT-4</SelectItem>
+                                <SelectItem value="claude-3.5-sonnet" className="text-black">Claude 3.5 Sonnet</SelectItem>
+                                <SelectItem value="gpt-4" className="text-black">GPT-4</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
 
                     {/* Character Prompt */}
                     <div>
-                        <span className="font-bold text-lg block mb-2">Character Prompt</span>
+                        <span className={`${pixelify_sans.className} text-blue-900 font-bold text-lg block mb-2`}>
+                            Character Prompt
+                        </span>
                         <Input
                             value={selected.prompt}
                             onChange={handlePromptChange}
                             placeholder="Enter character prompt"
-                            className="w-full"
+                            className="w-full text-black"
                         />
                     </div>
 
                     {/* Skills Selection */}
                     <div>
-                        <span className="font-bold text-lg block mb-2">Skills</span>
+                        <span className={`${pixelify_sans.className} text-blue-900 font-bold text-lg block mb-2`}>
+                            Skills
+                        </span>
                         <p className="text-sm text-gray-500 mb-4">
                             These are {CHARACTER_PRESETS[selected.character].name}&apos;s specialized skills
                         </p>

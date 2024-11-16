@@ -100,7 +100,7 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
     const getExternalLink = (eventName: string, metadata: Record<string, string>): string | null => {
         switch (eventName) {
             case 'contract_deployed':
-                return `https://basescan.org/${metadata.contractAddress}`;
+                return `https://basescan.org/address/${metadata.contractAddress}`;
             case 'uniswap_pool_created':
                 return `https://dexscreener.com/base/${metadata.poolAddress.toLowerCase()}`;
             case 'nft_created':
@@ -156,8 +156,8 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
                                 src={metadata.url}
                                 unoptimized={true}
                                 alt="Generated image"
-                                width={400}
-                                height={400}
+                                width={250}
+                                height={250}
                                 className="rounded-md"
                             />
                         )}
@@ -169,8 +169,8 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
                                 src={"https://i.pinimg.com/originals/1d/cc/84/1dcc8458abdeee8e528d7996047d1000.jpg"}
                                 unoptimized={true}
                                 alt="Uniswap pool"
-                                width={400}
-                                height={400}
+                                width={250}
+                                height={250}
                                 className="rounded-md"
                             />
                         )}
@@ -179,8 +179,8 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
                                 src={"https://avatars.githubusercontent.com/u/60056322?s=280&v=4"}
                                 unoptimized={true}
                                 alt="NFT"
-                                width={400}
-                                height={400}
+                                width={250}
+                                height={250}
                                 className="rounded-md"
                             />
                         )}
@@ -189,8 +189,8 @@ const Notification = ({ message, timestamp, characterName, eventName, metadata }
                                 src={"https://images.mirror-media.xyz/publication-images/cgqxxPdUFBDjgKna_dDir.png?height=1200&width=1200"}
                                 unoptimized={true}
                                 alt="Contract deployed"
-                                width={400}
-                                height={400}
+                                width={250}
+                                height={250}
                                 className="rounded-md"
                             />
                         )}

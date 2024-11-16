@@ -60,7 +60,7 @@ function DroppableArea({ selectedSkills, onRemoveSkill }: { selectedSkills: Skil
             className={`w-full min-h-[100px] border-2 ${borderColor} border-dashed rounded-lg p-4 transition-colors ${bgColor}`}
         >
             <div className="font-medium text-sm text-gray-500 mb-2">
-                Drop skills here (max 3)
+                Drop skills here
             </div>
             <div className="flex flex-wrap gap-2">
                 {selectedSkills.map((skill) => (

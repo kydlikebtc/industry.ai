@@ -916,6 +916,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
                     message: inputValue,
                     timestamp: new Date(),
                     characterName: 'You',
+                    chatMode: chatMode,
                     metadata: null,
                 }, ...prev].slice(0, 50));
 

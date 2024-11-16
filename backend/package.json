@@ -1,8 +1,8 @@
 {
-  "name": "backend",
+  "name": "eth-global-bangkok-2024",
   "version": "0.1.0",
   "bin": {
-    "backend": "bin/backend.js"
+    "eth-global-bangkok-2024": "bin/eth-global-bangkok-2024.js"
   },
   "scripts": {
     "build": "tsc",
@@ -15,13 +15,29 @@
     "@types/node": "22.5.4",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
-    "aws-cdk": "2.161.1",
+    "aws-cdk": "2.158.0",
     "ts-node": "^10.9.2",
     "typescript": "~5.6.2"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.161.1",
+    "@aws-lambda-powertools/logger": "^2.8.0",
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.682.0",
+    "@aws-sdk/client-s3": "^3.691.0",
+    "@aws-sdk/client-sqs": "^3.687.0",
+    "@aws-sdk/s3-request-presigner": "^3.691.0",
+    "@coinbase/coinbase-sdk": "^0.10.0",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@types/aws-lambda": "^8.10.145",
+    "@zoralabs/protocol-sdk": "^0.11.6",
+    "aws-cdk-lib": "2.158.0",
+    "class-variance-authority": "^0.7.0",
     "constructs": "^10.0.0",
-    "source-map-support": "^0.5.21"
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.456.0",
+    "multi-agent-orchestrator": "^0.0.17",
+    "source-map-support": "^0.5.21",
+    "twitter-api-v2": "^1.18.1",
+    "viem": "^2.21.44"
   }
 }

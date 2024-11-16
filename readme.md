@@ -1,6 +1,6 @@
 # Industry.ai
 
-![](./frontend/public/industry.png)
+![industry.ai](./frontend/public/logo.png)
 
 ### What is Industry.ai?
 

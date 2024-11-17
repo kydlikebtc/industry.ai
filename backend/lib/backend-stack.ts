@@ -138,6 +138,8 @@ export class EthGlobalBangkok2024Stack extends cdk.Stack {
 
       // RPC 
       BASE_RPC_URL: process.env.BASE_RPC_URL as string,
+      SCROLL_RPC_URL: process.env.SCROLL_RPC_URL as string,
+      POLYGON_RPC_URL: process.env.POLYGON_RPC_URL as string,
 
       // API Gateway
       DOMAIN_NAME: process.env.DOMAIN_NAME as string,

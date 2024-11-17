@@ -91,6 +91,10 @@ export const walletToolDescription = [
                             type: "string",
                             description: "The character that is deploying the contract (This will always be Rishi) as he is the one deploying the contract on behalf of the asker.",
                         },
+                        network: {
+                            type: "string",
+                            description: "The network to deploy the contract on. This will default to 'base' if not provided.",
+                        },
                         tokenSymbol: {
                             type: "string",
                             description: "The symbol of the token to deploy.",
@@ -440,6 +444,7 @@ export async function walletToolHandler(response: Response, conversation: Conver
                 case "Deploy_Contract_Tool":
                     result = await deployContract({
                         sessionId: toolUse.input.sessionId,
+                        network: toolUse.input.network || "base",
                         createdBy: toolUse.input.createdBy,
                         characterId: toolUse.input.characterId,
                         tokenName: toolUse.input.tokenName,

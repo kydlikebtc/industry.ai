@@ -267,7 +267,7 @@ const Game = ({ userId, walletAddress }: { userId: string, walletAddress: string
             if (!canvas) console.debug("Missing canvas");
             if (!map) console.debug("Missing map");
             if (!characters) console.debug("Missing characters");
-            if (playerStates.length === 0) console.debug("No player states"); // This is the issue
+            if (playerStates.length === 0) console.debug("No player states"); // Game cannot be drawn without player states initialized
             return;
         }
 
